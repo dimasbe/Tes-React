@@ -1,18 +1,31 @@
-import React from "react";
-import Header from "./components/Header";
-import HeroSection from "./components/HeroSection";
-import InfoSection from "./components/InfoSection";
-import Footer from "./components/Footer";
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import Home from './pages/Home'
+import Tentang from './pages/Tentang'
+import Produk from './pages/Produk'
+import Kontak from './pages/Kontak'
 
 function App() {
   return (
-    <div className="font-sans text-gray-800 bg-white">
-      <Header />
-      <HeroSection />
-      <InfoSection />
-      <Footer />
-    </div>
-  );
+    <Router>
+      <div className="font-sans bg-white text-gray-800 min-h-screen flex flex-col">
+        <Navbar />
+        
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/tentang" element={<Tentang />} />
+            <Route path="/produk" element={<Produk />} />
+            <Route path="/kontak" element={<Kontak />} />
+          </Routes>
+        </main>
+
+        <Footer />
+      </div>
+    </Router>
+  )
 }
 
-export default App;
+export default App

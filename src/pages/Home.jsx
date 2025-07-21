@@ -129,7 +129,7 @@ export default function Home() {
                 </div>
 
                 {/* Prospek Bisnis Hidroponik */}
-                <section className="py-12 bg-white dark:bg-gray-950 px-6 md:px-20" id="prospek">
+                <section className="py-12 bg-white px-6 md:px-20" id="prospek">
                     <motion.h2
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -143,10 +143,10 @@ export default function Home() {
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="bg-green-100 dark:bg-green-900 p-6 rounded-2xl shadow hover:scale-105 transition"
+                            className="bg-green-100 p-6 rounded-2xl shadow hover:scale-105 transition"
                         >
-                            <h3 className="text-xl font-semibold text-green-700 dark:text-green-300 mb-2">Pasar Konsumen yang Luas</h3>
-                            <p className="text-gray-700 dark:text-gray-300">
+                            <h3 className="text-xl font-semibold text-green-700 mb-2">Pasar Konsumen yang Luas</h3>
+                            <p className="text-gray-700">
                                 Sayuran segar sangat dibutuhkan oleh restoran, hotel, supermarket, dan rumah tangga.
                             </p>
                         </motion.div>
@@ -154,10 +154,10 @@ export default function Home() {
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4 }}
-                            className="bg-green-100 dark:bg-green-900 p-6 rounded-2xl shadow hover:scale-105 transition"
+                            className="bg-green-100 p-6 rounded-2xl shadow hover:scale-105 transition"
                         >
-                            <h3 className="text-xl font-semibold text-green-700 dark:text-green-300 mb-2">Minim Risiko Cuaca</h3>
-                            <p className="text-gray-700 dark:text-gray-300">
+                            <h3 className="text-xl font-semibold text-green-700 mb-2">Minim Risiko Cuaca</h3>
+                            <p className="text-gray-700">
                                 Tanaman hidroponik dapat tumbuh di dalam rumah kaca atau indoor tanpa tergantung musim.
                             </p>
                         </motion.div>
@@ -165,10 +165,10 @@ export default function Home() {
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.6 }}
-                            className="bg-green-100 dark:bg-green-900 p-6 rounded-2xl shadow hover:scale-105 transition"
+                            className="bg-green-100 p-6 rounded-2xl shadow hover:scale-105 transition"
                         >
-                            <h3 className="text-xl font-semibold text-green-700 dark:text-green-300 mb-2">Skalabilitas Usaha</h3>
-                            <p className="text-gray-700 dark:text-gray-300">
+                            <h3 className="text-xl font-semibold text-green-700 mb-2">Skalabilitas Usaha</h3>
+                            <p className="text-gray-700">
                                 Dapat dimulai dari skala kecil rumahan hingga menjadi usaha besar yang memasok ke berbagai daerah.
                             </p>
                         </motion.div>

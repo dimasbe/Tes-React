@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import heroImage from "../assets/hidroponik.jpeg";
+import heroImage from "../assets/Hidroponik.jpeg";
 import manfaat1 from "../assets/efisien-air.jpg";
 import manfaat2 from "../assets/tanpa-tanah.jpg";
 import manfaat3 from "../assets/cepat-panen.jpg";

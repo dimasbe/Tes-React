@@ -54,10 +54,14 @@ const Kontak = () => {
       </Helmet>
 
       {/* Konten utama halaman Kontak */}
-      <div className="min-h-screen bg-gradient-to-br from-green-100 via-white to-green-200 flex items-center justify-center px-4 py-10">
-        <div className="max-w-lg w-full bg-white/80 backdrop-blur-md rounded-3xl shadow-lg p-8 text-center border border-green-200">
-          <h2 className="text-4xl font-bold mb-4 text-green-700">Hubungi Kami</h2>
-          <p className="text-gray-600 mb-6">
+      {/* py-10 diubah menjadi py-8 untuk sedikit mengurangi padding vertikal di mobile */}
+      <div className="min-h-screen bg-gradient-to-br from-green-100 via-white to-green-200 flex items-center justify-center px-4 py-8 sm:py-10">
+        {/* max-w-lg tetap, p-8 diubah menjadi p-6 untuk sedikit mengurangi padding di mobile */}
+        <div className="max-w-lg w-full bg-white/80 backdrop-blur-md rounded-3xl shadow-lg p-6 sm:p-8 text-center border border-green-200">
+          {/* text-4xl diubah menjadi text-3xl untuk mobile, lalu 4xl di sm ke atas */}
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-green-700">Hubungi Kami</h2>
+          {/* text-gray-600 tetap, mb-6 tetap */}
+          <p className="text-sm sm:text-base text-gray-600 mb-6">
             Punya pertanyaan atau tertarik bekerja sama? Kami siap membantu Anda mewujudkan kebun hidroponik impian!
           </p>
 
@@ -66,7 +70,8 @@ const Kontak = () => {
               href="https://wa.me/6281234567890"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-full shadow-md transition transform hover:scale-105"
+              // py-3 px-6 sudah cukup responsif. Ukuran icon 20px juga oke.
+              className="flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-full shadow-md transition transform hover:scale-105 text-sm sm:text-base"
             >
               <FaWhatsapp size={20} />
               Chat via WhatsApp
@@ -74,7 +79,7 @@ const Kontak = () => {
 
             <a
               href="mailto:hidroponikku@example.com"
-              className="flex items-center justify-center gap-3 bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-full shadow-md transition transform hover:scale-105"
+              className="flex items-center justify-center gap-3 bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-full shadow-md transition transform hover:scale-105 text-sm sm:text-base"
             >
               <FaEnvelope size={20} />
               Kirim Email
@@ -84,13 +89,14 @@ const Kontak = () => {
               href="https://instagram.com/hidroponikku"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 bg-pink-500 hover:bg-pink-600 text-white py-3 px-6 rounded-full shadow-md transition transform hover:scale-105"
+              className="flex items-center justify-center gap-3 bg-pink-500 hover:bg-pink-600 text-white py-3 px-6 rounded-full shadow-md transition transform hover:scale-105 text-sm sm:text-base"
             >
               <FaInstagram size={20} />
               DM via Instagram
             </a>
           </div>
 
+          {/* mt-6 tetap, text-sm tetap */}
           <p className="mt-6 text-sm text-gray-500 italic">
             “Kami percaya setiap orang bisa bertani, mulai dari rumah.” 🌿
           </p>

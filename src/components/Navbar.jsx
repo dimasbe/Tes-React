@@ -11,7 +11,6 @@ const Navbar = () => {
 
   const navLinkClasses = (path) => {
     // Tentukan apakah link saat ini adalah halaman aktif dengan useMatch
-    // useMatch lebih handal untuk rute React Router
     const isActiveMatch = useMatch({ path: path, end: path === '/' }); // end: true untuk exact match pada root
     const isActive = !!isActiveMatch; // Mengubah objek match menjadi boolean
 
@@ -50,7 +49,10 @@ const Navbar = () => {
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className="max-w-6xl mx-auto flex items-center justify-between relative">
+      {/* Container utama untuk logo dan menu */}
+      {/* **PERUBAHAN DI SINI:** Hapus justify-between dari kontainer utama jika kita ingin menengahkan satu bagian */}
+      {/* Kita akan menggunakan 'flex' di sini dan mengatur space secara manual */}
+      <div className="w-full flex items-center relative px-6 lg:pl-16 lg:ml-[4px]">
         {/* Logo tetap di kiri */}
         <div className="text-2xl font-bold z-20">
           <Link
@@ -64,8 +66,9 @@ const Navbar = () => {
         </div>
 
         {/* Hamburger Menu Button (hanya terlihat di layar kecil) */}
+        {/* Pindahkan z-index tombol hamburger ke atas jika perlu */}
         <button
-          className="lg:hidden text-white focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-75 p-2 rounded-md z-20"
+          className="lg:hidden text-white focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-75 p-2 rounded-md z-20 absolute right-4" // Tambahkan absolute right-4 untuk posisi di kanan mobile
           onClick={toggleMenu}
           aria-label={isOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
           aria-expanded={isOpen}
@@ -120,10 +123,13 @@ const Navbar = () => {
             z-50 
             
             // Kelas khusus untuk desktop (lg:)
-            lg:flex lg:flex-row lg:items-center lg:justify-center 
+            lg:flex lg:flex-row lg:items-center 
             lg:w-auto lg:bg-transparent lg:text-white 
-            lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 
             lg:p-0 
+            
+            // **PERUBAHAN PENTING UNTUK CENTERING**
+            // Hapus lg:flex-grow dari sini
+           lg:ml-60 lg:mr-auto
           `}
           role="menu"
           aria-orientation={window.innerWidth < 1024 ? "vertical" : "horizontal"}
@@ -151,6 +157,7 @@ const Navbar = () => {
           </button>
 
           {/* Wrapper untuk link navigasi */}
+          {/* Ubah kembali ul menjadi flex biasa, tidak perlu absolute atau justify-center lagi */}
           <ul className="flex flex-col lg:flex-row space-y-3 lg:space-y-0 lg:space-x-6 text-lg w-full mt-10 lg:mt-0 text-center lg:text-left">
             <li className="list-none" role="none">
               <Link to="/" className={navLinkClasses('/')} onClick={() => setIsOpen(false)} role="menuitem">

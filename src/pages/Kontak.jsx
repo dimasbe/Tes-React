@@ -1,106 +1,198 @@
-import React from 'react';
-import { FaWhatsapp, FaInstagram, FaEnvelope } from 'react-icons/fa';
-import { Helmet } from 'react-helmet-async'; // Import Helmet di sini
+import React, { useState, useEffect } from 'react';
+import { FaWhatsapp, FaTelegramPlane, FaEnvelope, FaPlus, FaMinus } from 'react-icons/fa';
+import { Helmet } from 'react-helmet-async';
 
+// --- Skeleton Component for Contact Section ---
+const ContactSkeleton = () => (
+  <div className="mt-14 max-w-xl w-full bg-white/80 backdrop-blur-md rounded-3xl shadow-lg p-5 sm:p-6 text-center border border-green-200 mb-6 animate-pulse">
+    {/* Title Placeholder */}
+    <div className="h-8 bg-gray-300 rounded w-3/4 mx-auto mb-3"></div>
+    {/* Description Placeholder */}
+    <div className="h-4 bg-gray-200 rounded w-11/12 mx-auto mb-2"></div>
+    <div className="h-4 bg-gray-200 rounded w-10/12 mx-auto mb-5"></div>
+
+    {/* Buttons Placeholder */}
+    <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-5">
+      <div className="h-10 w-28 bg-gray-300 rounded-full"></div>
+      <div className="h-10 w-28 bg-gray-300 rounded-full"></div>
+      <div className="h-10 w-28 bg-gray-300 rounded-full"></div>
+    </div>
+  </div>
+);
+
+// --- Skeleton Component for FAQ Item ---
+const FaqItemSkeleton = () => (
+  <div className="border-b border-green-200 pb-2 last:border-b-0 animate-pulse">
+    {/* Question Placeholder */}
+    <div className="h-5 bg-gray-300 rounded w-full mb-1 py-1"></div>
+    {/* Answer Placeholder (initially hidden, but good to have a conceptual placeholder) */}
+    {/* <div className="h-4 bg-gray-200 rounded w-5/6 mt-1.5"></div> */}
+  </div>
+);
+
+// --- Kontak Main Component ---
 const Kontak = () => {
+  const [openFaqId, setOpenFaqId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // New state for loading
+
+  // Data FAQ
+  const faqs = [
+    {
+      id: 'faq1',
+      question: 'Bagaimana cara memesan produk GreenGrow?',
+      answer: 'Anda dapat memesan produk kami langsung melalui halaman "Produk" di website ini. Pilih produk yang Anda inginkan, tambahkan ke keranjang, dan ikuti langkah-langkah pembayaran.'
+    },
+    {
+      id: 'faq2',
+      question: 'Apakah GreenGrow melayani pengiriman ke seluruh Indonesia?',
+      answer: 'Saat ini, kami melayani pengiriman ke wilayah Jawa Timur. Untuk wilayah di luar itu, mohon hubungi kami untuk informasi lebih lanjut mengenai kemungkinan pengiriman.'
+    },
+    {
+      id: 'faq3',
+      question: 'Apakah ada garansi untuk bibit atau alat hidroponik?',
+      answer: 'Kami memberikan garansi kualitas untuk semua bibit dan alat hidroponik. Jika ada masalah, silakan hubungi tim dukungan kami dalam waktu 7 hari setelah penerimaan barang.'
+    },
+    {
+      id: 'faq4',
+      question: 'Bagaimana jika saya pemula dan butuh panduan menanam?',
+      answer: 'Kami menyediakan panduan menanam lengkap di bagian "Blog" kami. Selain itu, Anda juga bisa mendapatkan konsultasi gratis dengan tim ahli kami melalui WhatsApp atau email.'
+    },
+  ];
+
+  // Simulate data fetching delay
+  useEffect(() => {
+    setIsLoading(true); // Start loading
+    const timer = setTimeout(() => {
+      setIsLoading(false); // End loading after 1.5 seconds
+    }, 1500); // Adjust duration as needed
+
+    return () => clearTimeout(timer); // Cleanup timer
+  }, []); // Empty dependency array means this runs once on mount
+
+  const toggleFaq = (id) => {
+    setOpenFaqId(openFaqId === id ? null : id);
+  };
+
   return (
-    // Gunakan React.Fragment atau shorthand <> </> jika ada lebih dari satu elemen root
-    // karena Helmet juga dianggap sebagai child yang perlu di-render
     <>
-      {/* Helmet untuk mengelola metadata SEO khusus halaman Kontak */}
       <Helmet>
-        <title>Kontak Kami - HidroponikKu | Hubungi Dukungan</title>
+        <title>Kontak & FAQ - GreenGrow | Kirim Pesan & Temukan Jawaban</title>
         <meta
           name="description"
-          content="Hubungi tim HidroponikKu untuk pertanyaan, dukungan, atau kerjasama. Temukan informasi kontak WhatsApp, Email, dan Instagram kami di sini."
+          content="Hubungi tim GreenGrow untuk pertanyaan, dukungan, atau temukan jawaban cepat di bagian Pertanyaan Umum (FAQ) kami."
         />
-        <link rel="canonical" href="https://www.yourdomain.com/kontak" />{" "}
-        {/* Ganti dengan URL halaman kontak Anda yang sebenarnya */}
+        <link rel="canonical" href="https://www.yourdomain.com/kontak" />
 
-        {/* Opsional: Contoh Schema Markup untuk informasi kontak (JSON-LD) */}
-        {/* Ini membantu mesin pencari memahami data kontak Anda secara terstruktur */}
-        <script type="application/ld+json">
-          {`
-            {
-              "@context": "https://schema.org",
-              "@type": "ContactPage", // Atau "WebPage" atau "Organization" jika lebih luas
-              "name": "Kontak Kami",
-              "url": "https://www.yourdomain.com/kontak",
-              "description": "Halaman untuk menghubungi HidroponikKu via WhatsApp, Email, atau Instagram.",
-              "potentialAction": [
-                {
-                  "@type": "CommunicateAction",
-                  "target": {
-                    "@type": "EntryPoint",
-                    "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"],
-                    "urlTemplate": "https://wa.me/6281234567890"
-                  },
-                  "name": "Chat via WhatsApp"
-                },
-                {
-                  "@type": "CommunicateAction",
-                  "target": {
-                    "@type": "EntryPoint",
-                    "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"],
-                    "urlTemplate": "mailto:hidroponikku@example.com"
-                  },
-                  "name": "Kirim Email"
-                }
-              ]
-            }
-          `}
-        </script>
-        {/* Akhir dari Schema Markup */}
+        {/* JSON-LD Script - Only render if not loading to ensure data is available */}
+        {!isLoading && (
+          <script type="application/ld+json">
+            {`
+              {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": [
+                  ${faqs.map(faq => `
+                    {
+                      "@type": "Question",
+                      "name": "${faq.question}",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "${faq.answer}"
+                      }
+                    }
+                  `).join(',')}
+                ]
+              }
+            `}
+          </script>
+        )}
       </Helmet>
 
-      {/* Konten utama halaman Kontak */}
-      {/* py-10 diubah menjadi py-8 untuk sedikit mengurangi padding vertikal di mobile */}
-      <div className="min-h-screen bg-gradient-to-br from-green-100 via-white to-green-200 flex items-center justify-center px-4 py-8 sm:py-10">
-        {/* max-w-lg tetap, p-8 diubah menjadi p-6 untuk sedikit mengurangi padding di mobile */}
-        <div className="max-w-lg w-full bg-white/80 backdrop-blur-md rounded-3xl shadow-lg p-6 sm:p-8 text-center border border-green-200">
-          {/* text-4xl diubah menjadi text-3xl untuk mobile, lalu 4xl di sm ke atas */}
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-green-700">Hubungi Kami</h2>
-          {/* text-gray-600 tetap, mb-6 tetap */}
-          <p className="text-sm sm:text-base text-gray-600 mb-6">
-            Punya pertanyaan atau tertarik bekerja sama? Kami siap membantu Anda mewujudkan kebun hidroponik impian!
-          </p>
+      {/* Main Content Wrapper */}
+      <div className="pt-20 min-h-screen bg-gradient-to-br from-green-100 via-white to-green-200 flex flex-col items-center px-4 py-6 sm:py-8">
 
-          <div className="flex flex-col gap-4">
-            <a
-              href="https://wa.me/6281234567890"
-              target="_blank"
-              rel="noopener noreferrer"
-              // py-3 px-6 sudah cukup responsif. Ukuran icon 20px juga oke.
-              className="flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-full shadow-md transition transform hover:scale-105 text-sm sm:text-base"
-            >
-              <FaWhatsapp size={20} />
-              Chat via WhatsApp
-            </a>
+        {isLoading ? (
+          // Render Skeletons when loading
+          <>
+            <ContactSkeleton />
+            <div className="max-w-xl w-full bg-white/80 backdrop-blur-md rounded-3xl shadow-lg p-5 sm:p-6 text-center border border-green-200 animate-pulse">
+              <div className="h-8 bg-gray-300 rounded w-1/2 mx-auto mb-3"></div> {/* FAQ Title Placeholder */}
+              <div className="text-left space-y-2">
+                {Array.from({ length: faqs.length }).map((_, index) => (
+                  <FaqItemSkeleton key={index} />
+                ))}
+              </div>
+            </div>
+          </>
+        ) : (
+          // Render actual content when not loading
+          <>
+            {/* Bagian Hubungi Kami (Kartu Utama) */}
+            <div className="mt-14 max-w-xl w-full bg-white/80 backdrop-blur-md rounded-3xl shadow-lg p-5 sm:p-6 text-center border border-green-200 mb-6">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-3 text-green-700">Hubungi Kami</h2>
+              <p className="text-sm text-gray-600 mb-5">
+                Punya pertanyaan, butuh dukungan, atau tertarik bekerja sama? Tim GreenGrow siap membantu Anda!
+              </p>
 
-            <a
-              href="mailto:hidroponikku@example.com"
-              className="flex items-center justify-center gap-3 bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-full shadow-md transition transform hover:scale-105 text-sm sm:text-base"
-            >
-              <FaEnvelope size={20} />
-              Kirim Email
-            </a>
+              <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-5">
+                <a
+                  href="https://wa.me/6281234567890" // Ganti dengan nomor WhatsApp Anda
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-full shadow-md transition transform hover:scale-105 text-sm font-medium"
+                >
+                  <FaWhatsapp size={16} />
+                  WhatsApp
+                </a>
 
-            <a
-              href="https://instagram.com/hidroponikku"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 bg-pink-500 hover:bg-pink-600 text-white py-3 px-6 rounded-full shadow-md transition transform hover:scale-105 text-sm sm:text-base"
-            >
-              <FaInstagram size={20} />
-              DM via Instagram
-            </a>
-          </div>
+                <a
+                  href="https://t.me/greengrow_support" // Ganti dengan username atau link grup/channel Telegram Anda
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full shadow-md transition transform hover:scale-105 text-sm font-medium"
+                >
+                  <FaTelegramPlane size={16} />
+                  Telegram
+                </a>
 
-          {/* mt-6 tetap, text-sm tetap */}
-          <p className="mt-6 text-sm text-gray-500 italic">
-            “Kami percaya setiap orang bisa bertani, mulai dari rumah.” 🌿
-          </p>
-        </div>
+                <a
+                  href="mailto:greengrow@example.com" // Ganti dengan email Anda
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-full shadow-md transition transform hover:scale-105 text-sm font-medium"
+                >
+                  <FaEnvelope size={16} />
+                  Email
+                </a>
+              </div>
+            </div>
+
+            {/* Bagian FAQ (Kartu Kedua, di bawah Hubungi Kami) */}
+            <div className="max-w-xl w-full bg-white/80 backdrop-blur-md rounded-3xl shadow-lg p-5 sm:p-6 text-center border border-green-200">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-3 text-green-700">Pertanyaan Umum (FAQ)</h2>
+              <div className="text-left space-y-2">
+                {faqs.map((faq) => (
+                  <div key={faq.id} className="border-b border-green-200 pb-2 last:border-b-0">
+                    <button
+                      className="flex justify-between items-center w-full text-base font-semibold text-green-800 hover:text-green-600 focus:outline-none py-1"
+                      onClick={() => toggleFaq(faq.id)}
+                      aria-expanded={openFaqId === faq.id}
+                      aria-controls={`faq-answer-${faq.id}`}
+                    >
+                      {faq.question}
+                      {openFaqId === faq.id ? <FaMinus size={16} /> : <FaPlus size={16} />}
+                    </button>
+                    {openFaqId === faq.id && (
+                      <p id={`faq-answer-${faq.id}`} className="mt-1.5 text-gray-700 text-sm leading-relaxed animate-fade-in-down">
+                        {faq.answer}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

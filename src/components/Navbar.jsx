@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useMatch } from 'react-router-dom';
+import greenGrowLogo from '../assets/logo.png'; 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,9 +11,8 @@ const Navbar = () => {
   };
 
   const navLinkClasses = (path) => {
-    // Tentukan apakah link saat ini adalah halaman aktif dengan useMatch
-    const isActiveMatch = useMatch({ path: path, end: path === '/' }); // end: true untuk exact match pada root
-    const isActive = !!isActiveMatch; // Mengubah objek match menjadi boolean
+    const isActiveMatch = useMatch({ path: path, end: path === '/' });
+    const isActive = !!isActiveMatch;
 
     return `
       block py-3 px-6 transition-all duration-200 ease-in-out
@@ -24,7 +24,6 @@ const Navbar = () => {
         : 'text-gray-700 hover:text-green-800' // Default & hover mobile: abu-abu gelap, berubah hijau gelap saat hover
       }
       
-      // PERBAIKAN FOKUS (Mobile): Menghilangkan ring/outline yang kotak
       focus:outline-none focus:text-green-800 focus:font-semibold
       
       // Desktop Styling (lg:)
@@ -33,42 +32,52 @@ const Navbar = () => {
       lg:no-underline 
       lg:hover:no-underline 
       
-      // Perubahan PENTING untuk desktop
       ${isActive
-        ? 'lg:text-white lg:font-semibold' // Aktif desktop: putih menyala, bold
-        : 'lg:text-white/60' // Default desktop: abu-abu samar
+        ? 'lg:text-white lg:font-semibold'
+        : 'lg:text-white/60'
       }
-      // PERBAIKAN FOKUS DESKTOP: Menghilangkan ring/outline yang kotak
-      lg:focus:outline-none lg:focus:text-white lg:focus:font-semibold // Fokus desktop: putih menyala, bold
+      lg:focus:outline-none lg:focus:text-white lg:focus:font-semibold
     `;
   };
 
+  // Definisikan link navigasi agar mudah di-loop
+  const navLinks = [
+    { to: '/', label: 'Beranda' },
+    { to: '/tentang', label: 'Tentang' },
+    { to: '/blog', label: 'Blog' },
+    { to: '/produk', label: 'Produk' },
+    { to: '/kontak', label: 'Kontak' },
+  ];
+
   return (
     <nav
-      className="bg-green-600 p-4 text-white shadow relative z-50"
+      className="bg-green-800 p-4 text-white shadow fixed top-0 w-full z-50"
       role="navigation"
       aria-label="Main navigation"
     >
-      {/* Container utama untuk logo dan menu */}
-      {/* **PERUBAHAN DI SINI:** Hapus justify-between dari kontainer utama jika kita ingin menengahkan satu bagian */}
-      {/* Kita akan menggunakan 'flex' di sini dan mengatur space secara manual */}
-      <div className="w-full flex items-center relative px-6 lg:pl-16 lg:ml-[4px]">
+      {/* Container utama untuk logo, menu, dan tombol */}
+      <div className="w-full flex items-center relative px-6 lg:pl-16">
         {/* Logo tetap di kiri */}
-        <div className="text-2xl font-bold z-20">
+        <div className="text-2xl font-bold z-20 flex items-center space-x-2">
           <Link
             to="/"
-            className="hover:text-green-200 transition-colors focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-75"
-            aria-label="Beranda HidroponikKu"
+            className="flex items-center hover:text-green-200 transition-colors focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-75"
+            aria-label="Beranda GreenGrow"
             onClick={() => setIsOpen(false)}
           >
-            HidroponikKu
+            {/* Mengganti SVG dengan tag <img> yang mengimpor logo Anda */}
+            <img 
+              src={greenGrowLogo} 
+              alt="GreenGrow Logo" 
+              className="w-9 h-9 mr-2 -mt-2" // Sesuaikan ukuran sesuai kebutuhan
+            />
+            <span>GreenGrow</span>
           </Link>
         </div>
 
         {/* Hamburger Menu Button (hanya terlihat di layar kecil) */}
-        {/* Pindahkan z-index tombol hamburger ke atas jika perlu */}
         <button
-          className="lg:hidden text-white focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-75 p-2 rounded-md z-20 absolute right-4" // Tambahkan absolute right-4 untuk posisi di kanan mobile
+          className="lg:hidden text-white focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-75 p-2 rounded-md z-20 absolute right-4"
           onClick={toggleMenu}
           aria-label={isOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
           aria-expanded={isOpen}
@@ -126,10 +135,7 @@ const Navbar = () => {
             lg:flex lg:flex-row lg:items-center 
             lg:w-auto lg:bg-transparent lg:text-white 
             lg:p-0 
-            
-            // **PERUBAHAN PENTING UNTUK CENTERING**
-            // Hapus lg:flex-grow dari sini
-           lg:ml-60 lg:mr-auto
+            lg:ml-[12rem] 
           `}
           role="menu"
           aria-orientation={window.innerWidth < 1024 ? "vertical" : "horizontal"}
@@ -157,29 +163,61 @@ const Navbar = () => {
           </button>
 
           {/* Wrapper untuk link navigasi */}
-          {/* Ubah kembali ul menjadi flex biasa, tidak perlu absolute atau justify-center lagi */}
           <ul className="flex flex-col lg:flex-row space-y-3 lg:space-y-0 lg:space-x-6 text-lg w-full mt-10 lg:mt-0 text-center lg:text-left">
-            <li className="list-none" role="none">
-              <Link to="/" className={navLinkClasses('/')} onClick={() => setIsOpen(false)} role="menuitem">
-                Beranda
-              </Link>
-            </li>
-            <li className="list-none" role="none">
-              <Link to="/tentang" className={navLinkClasses('/tentang')} onClick={() => setIsOpen(false)} role="menuitem">
-                Tentang
-              </Link>
-            </li>
-            <li className="list-none" role="none">
-              <Link to="/produk" className={navLinkClasses('/produk')} onClick={() => setIsOpen(false)} role="menuitem">
-                Produk
-              </Link>
-            </li>
-            <li className="list-none" role="none">
-              <Link to="/kontak" className={navLinkClasses('/kontak')} onClick={() => setIsOpen(false)} role="menuitem">
-                Kontak
-              </Link>
-            </li>
+            {navLinks.map((link, index) => (
+              <li
+                key={link.to}
+                className={`list-none lg:!translate-y-0 lg:!opacity-100 transition-all duration-300 ease-out
+                                ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+                `}
+                // Menggunakan style inline untuk delay agar mudah diatur per item
+                style={{ transitionDelay: isOpen ? `${index * 50}ms` : `${(navLinks.length - 1 - index) * 50}ms` }}
+                role="none"
+              >
+                <Link to={link.to} className={navLinkClasses(link.to)} onClick={() => setIsOpen(false)} role="menuitem">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
+
+          {/* Tombol Login/Register untuk MOBILE (di dalam sidebar) */}
+          <div className="lg:hidden flex flex-col space-y-3 mt-8 pt-4 border-t border-gray-200">
+            <Link
+              to="/login"
+              className="block py-2 px-6 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-75 text-center"
+              aria-label="Login"
+              onClick={() => setIsOpen(false)}
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="block py-2 px-6 border-2 border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-75 text-center"
+              aria-label="Register"
+              onClick={() => setIsOpen(false)}
+            >
+              Register
+            </Link>
+          </div>
+        </div>
+
+        {/* Bagian untuk Tombol Login/Register DESKTOP (di navbar) */}
+        <div className="hidden lg:flex items-center space-x-4 ml-auto">
+          <Link
+            to="/login"
+            className="py-1.5 px-3 bg-white text-green-600 rounded-lg hover:bg-green-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-75"
+            aria-label="Login"
+          >
+            Login
+          </Link>
+          <Link
+            to="/register"
+            className="py-1.5 px-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-green-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-75"
+            aria-label="Register"
+          >
+            Register
+          </Link>
         </div>
       </div>
     </nav>

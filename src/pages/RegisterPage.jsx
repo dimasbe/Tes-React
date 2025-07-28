@@ -1,8 +1,7 @@
-// src/pages/RegisterPage.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { FcGoogle } from 'react-icons/fc';
+import { FaGoogle, FaFacebookF, FaTwitter } from 'react-icons/fa'; // Import social icons
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -13,20 +12,21 @@ const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState(''); // State for custom message box
 
   const handleRegister = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert('Konfirmasi Kata Sandi tidak cocok!');
+      setMessage('Konfirmasi Kata Sandi tidak cocok!');
       return;
     }
     console.log('Register with:', { name, email, password });
-    alert('Simulasi Pendaftaran berhasil! (Lihat konsol)');
+    setMessage('Simulasi Pendaftaran berhasil! (Lihat konsol)');
   };
 
-  const handleGoogleRegister = () => {
-    console.log('Register with Google clicked');
-    alert('Simulasi Pendaftaran dengan Google! (Membutuhkan integrasi backend)');
+  const handleSocialLogin = (provider) => {
+    console.log(`Register with ${provider} clicked`);
+    setMessage(`Simulasi Pendaftaran dengan ${provider}! (Membutuhkan integrasi backend)`);
   };
 
   return (
@@ -42,7 +42,17 @@ const RegisterPage = () => {
           <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-2xl md:rounded-xl shadow-xl overflow-hidden">
             {/* Form */}
             <div className="w-full md:w-1/2 bg-green-100 p-6 sm:p-8">
-              <h2 className="text-3xl font-bold text-center text-green-700 mb-6">Daftar</h2>
+              <h2 className="text-3xl font-bold text-center text-green-700 mb-6">Register</h2>
+
+              {/* Custom Message Box */}
+              {message && (
+                <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative mb-4" role="alert">
+                  <span className="block sm:inline">{message}</span>
+                  <span className="absolute top-0 bottom-0 right-0 px-4 py-3" onClick={() => setMessage('')}>
+                    <svg className="fill-current h-6 w-6 text-blue-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 2.65a1.2 1.2 0 1 1-1.697-1.697l2.758-2.758-2.758-2.759a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-2.651a1.2 1.2 0 1 1 1.697 1.697l-2.758 2.758 2.758 2.759a1.2 1.2 0 0 1 0 1.698z"/></svg>
+                  </span>
+                </div>
+              )}
 
               <form onSubmit={handleRegister} className="space-y-5 text-sm">
                 <div>
@@ -102,7 +112,7 @@ const RegisterPage = () => {
                   type="submit"
                   className="w-full bg-green-600 text-white py-2.5 rounded-md font-semibold hover:bg-green-700 transition duration-300"
                 >
-                  Daftar
+                  Register
                 </button>
               </form>
 
@@ -111,22 +121,27 @@ const RegisterPage = () => {
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-xs">
-                  <span className="bg-green-100 px-2 text-gray-500">Atau daftar dengan</span>
+                  <span className="bg-green-100 px-2 text-gray-500">Atau register dengan</span>
                 </div>
               </div>
 
-              <button
-                onClick={handleGoogleRegister}
-                className="w-full flex items-center justify-center bg-white border border-gray-300 py-2.5 rounded-md hover:bg-gray-100 transition"
-              >
-                <FcGoogle className="text-2xl mr-2" />
-                Daftar dengan Google
-              </button>
+              {/* Social login buttons */}
+              <div className="flex justify-center space-x-3 mb-4">
+                <button onClick={() => handleSocialLogin('Google')} className="p-2 border border-gray-300 rounded-full hover:bg-gray-100">
+                  <FaGoogle className="w-4 h-4 text-blue-500" />
+                </button>
+                <button onClick={() => handleSocialLogin('Facebook')} className="p-2 border border-gray-300 rounded-full hover:bg-gray-100">
+                  <FaFacebookF className="w-4 h-4 text-blue-700" />
+                </button>
+                <button onClick={() => handleSocialLogin('Twitter')} className="p-2 border border-gray-300 rounded-full hover:bg-gray-100">
+                  <FaTwitter className="w-4 h-4 text-gray-800" />
+                </button>
+              </div>
 
               <p className="text-center text-gray-600 text-xs mt-6">
                 Sudah punya akun?{' '}
                 <Link to="/login" className="text-green-600 hover:underline font-semibold">
-                  Masuk Sekarang
+                  Login Sekarang
                 </Link>
               </p>
             </div>

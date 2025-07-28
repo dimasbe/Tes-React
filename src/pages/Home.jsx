@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { Link, useLocation, useMatch } from 'react-router-dom';
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
+import { FaShippingFast, FaTags, FaLeaf, FaHandsHelping } from "react-icons/fa";
+
+// Import icons from lucide-react for the "Alur Memesan" section
+import {
+  UserPlus,
+  LogIn,
+  ShoppingCart,
+  CheckCircle,
+} from 'lucide-react';
 
 // Pastikan path gambar sudah benar dan gambar ada di folder assets
 import heroImage from "../assets/Hidroponik.jpeg";
@@ -66,6 +76,31 @@ const prospekData = [
   },
 ];
 
+// Data for the "Alur Memesan" section
+const steps = [
+  {
+    icon: <UserPlus className="w-10 h-10 text-green-600" />,
+    title: 'Buat Akun',
+    desc: 'Daftar sebagai pengguna untuk mulai memesan berbagai kebutuhan hidroponik.',
+  },
+  {
+    icon: <LogIn className="w-10 h-10 text-green-600" />,
+    title: 'Login',
+    desc: 'Masuk ke akun kamu untuk mengakses fitur pembelian yang tersedia.',
+  },
+  {
+    icon: <ShoppingCart className="w-10 h-10 text-green-600" />,
+    title: 'Pilih & Pesan Produk',
+    desc: 'Telusuri produk lalu tambahkan ke keranjang dan lakukan pemesanan.',
+  },
+  {
+    icon: <CheckCircle className="w-10 h-10 text-green-600" />,
+    title: 'Selesaikan Pemesanan',
+    desc: 'Isi detail pengiriman dan konfirmasi pesanan, kami akan segera proses pesananmu!',
+  },
+];
+
+
 // Komponen Skeleton untuk Manfaat
 const ManfaatSkeleton = () => (
   <div className="bg-white shadow-lg rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center animate-pulse">
@@ -117,31 +152,33 @@ export default function Home() {
     <>
       {/* Helmet untuk mengelola metadata SEO */}
       <Helmet>
-        <title>HidroponikKu - Belajar & Beli Alat Hidroponik Modern untuk Pemula</title>
+        <title>GreenGrow - Belajar & Beli Alat Hidroponik Modern untuk Pemula</title>
         <meta
           name="description"
-          content="Temukan panduan lengkap, tips praktis, dan produk hidroponik berkualitas tinggi di HidroponikKu. Mulai bertani tanpa tanah, lebih efisien, dan ramah lingkungan sekarang!"
+          content="Temukan panduan lengkap, tips praktis, dan produk hidroponik berkualitas tinggi di GreenGrow. Mulai bertani tanpa tanah, lebih efisien, dan ramah lingkungan sekarang!"
         />
         <link rel="canonical" href={BASE_URL + "/"} />
-        <meta property="og:title" content="HidroponikKu - Pertanian Modern Tanpa Tanah" />
+        <meta property="og:title" content="GreenGrow - Pertanian Modern Tanpa Tanah" />
         <meta property="og:description" content="Platform edukasi dan penjualan produk hidroponik terdepan untuk gaya hidup hijau dan hasil panen melimpah." />
         <meta property="og:image" content={SOCIAL_SHARE_IMAGE} />
         <meta property="og:url" content={BASE_URL + "/"} />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="HidroponikKu - Bertani Tanpa Batas" />
-        <meta name="twitter:description" content="Mulai revolusi pertanian Anda dengan panduan dan alat hidroponik lengkap dari HidroponikKu." />
+        <meta name="twitter:title" content="GreenGrow - Bertani Tanpa Batas" />
+        <meta name="twitter:description" content="Mulai revolusi pertanian Anda dengan panduan dan alat hidroponik lengkap dari GreenGrow." />
         <meta name="twitter:image" content={SOCIAL_SHARE_IMAGE} />
       </Helmet>
 
       <div className="pt-16 bg-gray-100">
         {/* Hero Section */}
-        <div className="relative h-[45vh] sm:h-screen overflow-hidden">
+        <div className="relative h-[60vh] sm:h-screen overflow-hidden">
           <img
             src={heroImage}
             alt="Ilustrasi sistem hidroponik modern dengan berbagai tanaman hijau segar dan pencahayaan alami"
-            className="w-full h-full object-cover object-top brightness-75"
+            className="w-full h-full object-cover object-center"
           />
+          {/* Overlay gelap untuk membuat teks lebih terlihat */}
+          <div className="absolute inset-0 bg-black opacity-60"></div>
           <div className="absolute inset-0 flex flex-col justify-center items-center text-white px-4 text-center">
             <motion.h1
               className="text-2xl sm:text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg px-2"
@@ -149,7 +186,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
             >
-              Selamat Datang di Dunia Hidroponik Modern
+              Solusi Cerdas untuk Hidroponik Masa Kini
             </motion.h1>
             <motion.p
               className="text-sm sm:text-lg max-w-2xl leading-relaxed drop-shadow-md px-4"
@@ -157,17 +194,42 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 1 }}
             >
-              Temukan cara modern bertani tanpa tanah, lebih efisien, dan ramah lingkungan
-              bersama "HidroponikKu", platform lengkap untuk semua kebutuhan hidroponik Anda.
+              "Kami menjual berbagai perlengkapan hidroponik, mulai dari alat, bibit, hingga sayuran segar hasil panen. Tak hanya itu, Anda juga bisa mendapatkan tips menanam langsung dari kami - semua tersedia di platform GreenGrow."
             </motion.p>
+
+            {/* New Buttons for Hero Section */}
+            {/* INI BAGIAN YANG SAYA UBAH */}
+            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"> {/* Kembali ke flex-col di mobile, flex-row di sm ke atas */}
+              <Link to="/produk">
+                <motion.button
+                  className="bg-green-800 text-white px-6 py-3 rounded-md font-semibold shadow-md hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 w-full sm:w-auto min-w-[200px] text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.5, duration: 0.5 }}
+                >
+                  Lihat Produk
+                </motion.button>
+              </Link>
+              <Link to="/kontak">
+                <motion.button
+                  className="bg-transparent text-white border border-white px-6 py-3 rounded-md font-semibold hover:bg-white hover:text-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-75 w-full sm:w-auto min-w-[200px] text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.7, duration: 0.5 }}
+                >
+                  Kontak Sekarang
+                </motion.button>
+              </Link>
+            </div>
           </div>
         </div>
 
         {/* Bagian Perkenalan & Informasi Singkat */}
         <section className="py-12 sm:py-16 px-4 sm:px-6 md:px-16 lg:px-24 max-w-6xl mx-auto text-center">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-green-700 mb-4 sm:mb-6">
-            Mengapa Hidroponik adalah Masa Depan Pertanian Kita?
+            Apa Itu Hidroponik?
           </h2>
+
           {isLoading ? (
             <div className="space-y-2 animate-pulse">
               <div className="h-4 bg-gray-200 rounded w-full"></div>
@@ -175,57 +237,72 @@ export default function Home() {
               <div className="h-4 bg-gray-200 rounded w-5/6 mx-auto"></div>
             </div>
           ) : (
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed text-justify">
-              Hidroponik bukan hanya sekadar metode bertani, melainkan sebuah inovasi yang
-              menjawab tantangan pangan modern seperti keterbatasan lahan dan kebutuhan akan
-              produksi yang berkelanjutan. Dengan sistem ini, Anda bisa menanam di mana saja,
-              kapan saja, dan menghasilkan sayuran atau buah-buahan yang lebih segar,
-              bersih, serta kaya nutrisi. Di **HidroponikKu**, kami berkomitmen untuk
-              mempermudah Anda memulai perjalanan ini, dengan panduan yang jelas, alat
-              berkualitas, dan komunitas yang mendukung.
-            </p>
+            <>
+              <p className="text-sm sm:text-base text-gray-700 leading-relaxed text-justify indent-8">
+                Hidroponik adalah metode bercocok tanam tanpa menggunakan tanah, melainkan memanfaatkan air yang kaya akan nutrisi.
+                Sistem ini memungkinkan tanaman tumbuh lebih cepat, sehat, dan higienis karena lingkungan tumbuh yang terkontrol.
+                Hidroponik menjadi solusi pertanian modern yang efisien, ramah lingkungan, dan cocok diaplikasikan di lahan terbatas
+                seperti rumah perkotaan atau indoor garden.
+              </p>
+
+              <p className="text-sm sm:text-base text-gray-700 leading-relaxed text-justify indent-8 mt-4">
+                Di sinilah GreenGrow hadir sebagai solusi lengkap untuk Anda yang ingin memulai atau mengembangkan kebun hidroponik sendiri.
+                Kami menyediakan berbagai alat, bibit unggul, hingga hasil panen sayuran hidroponik yang segar dan sehat. Tidak hanya itu,
+                kami juga berbagi tips, panduan, dan inspirasi seputar hidroponik melalui blog kami — semua dalam satu platform yang praktis.
+                Dengan GreenGrow, bertanam hidroponik jadi lebih mudah, menyenangkan, dan produktif. Mari mulai gaya hidup sehat dan ramah lingkungan bersama kami!
+              </p>
+            </>
           )}
         </section>
 
-        {/* Alur Membuat Hidroponik */}
+        {/* Mengapa Memilih GreenGrow? */}
         <section className="py-12 sm:py-16 px-4 bg-green-50">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-green-700 mb-8 sm:mb-12">
-            Alur Mudah Memulai Hidroponik Bersama HidroponikKu
+            Mengapa Memilih GreenGrow?
           </h2>
-          <div className="flex justify-center items-center gap-2 sm:gap-4 overflow-x-auto px-2 sm:px-4 pb-4 no-scrollbar">
-            {isLoading
-              ? Array.from({ length: 5 }).map((_, idx) => (
-                <React.Fragment key={idx}>
-                  <LangkahSkeleton />
-                  {idx < 4 && (
-                    <div className="w-4 sm:w-8 h-1 bg-gray-300 hidden sm:block animate-pulse"></div>
-                  )}
-                </React.Fragment>
-              ))
-              : langkah.map((step, index) => (
-                <React.Fragment key={index}>
-                  <motion.div
-                    className="min-w-[60px] h-[60px] text-[9px] sm:min-w-[80px] sm:h-[80px] sm:text-xs md:min-w-[120px] md:h-[120px] md:text-base rounded-full bg-green-600 text-white flex flex-shrink-0 items-center justify-center text-center font-semibold shadow-lg p-1 sm:p-3"
-                    whileHover={{ scale: 1.1 }}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ delay: index * 0.2 }}
-                  >
-                    {step}
-                  </motion.div>
-                  {index < langkah.length - 1 && (
-                    <div className="w-4 sm:w-8 h-1 bg-green-500 hidden sm:block"></div>
-                  )}
-                </React.Fragment>
-              ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {[
+              {
+                icon: <FaShippingFast size={32} className="text-green-600 mx-auto mb-3" />,
+                title: "Pengiriman Cepat",
+                desc: "Pesanan Anda akan diproses dan dikirim dengan cepat ke seluruh Indonesia, sehingga produk sampai dalam kondisi terbaik dan siap pakai.",
+              },
+              {
+                icon: <FaTags size={32} className="text-green-600 mx-auto mb-3" />,
+                title: "Harga Terjangkau",
+                desc: "Kami memberikan harga kompetitif tanpa mengorbankan kualitas, cocok untuk pemula maupun pelaku usaha hidroponik skala besar.",
+              },
+              {
+                icon: <FaHandsHelping size={32} className="text-green-600 mx-auto mb-3" />,
+                title: "Konsultasi & Panduan",
+                desc: "Dapatkan bimbingan langsung, tips menanam, dan panduan lengkap untuk membantu Anda sukses dalam bercocok tanam hidroponik.",
+              },
+              {
+                icon: <FaLeaf size={32} className="text-green-600 mx-auto mb-3" />,
+                title: "Produk Berkualitas",
+                desc: "GreenGrow hanya menyediakan produk pilihan mulai dari benih, alat tanam, hingga hasil panen yang sehat dan segar.",
+              },
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ delay: index * 0.2 }}
+                className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition duration-300 text-center"
+              >
+                {item.icon}
+                <h3 className="text-lg font-semibold text-green-700 mb-2">{item.title}</h3>
+                <p className="text-sm text-gray-700 text-justify">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </section>
 
         {/* Manfaat Hidroponik */}
         <section className="max-w-6xl mx-auto py-12 sm:py-16 px-4 sm:px-6">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-green-700 text-center mb-8 sm:mb-12">
-            Manfaat Utama Bertanam Hidroponik yang Perlu Anda Tahu
+            Manfaat Utama Berkebun Hidroponik yang Perlu Anda Tahu
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {isLoading
@@ -254,8 +331,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Prospek Bisnis Hidroponik */}
-        <section className="py-12 bg-white px-4 sm:px-6 md:px-12 lg:px-20" id="prospek">
+        {/* Alur Memesan Produk di GreenGrow */}
+        <section className="py-12 bg-white px-4 sm:px-6 md:px-12 lg:px-20" id="alur-pesan">
           <motion.h2
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -263,24 +340,24 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-xl sm:text-2xl md:text-3xl font-bold text-green-700 text-center mb-8 sm:mb-12"
           >
-            Prospek Bisnis Hidroponik yang Sangat Menjanjikan
+            Alur Memesan Produk di GreenGrow
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 text-center max-w-6xl mx-auto">
-            {isLoading
-              ? Array.from({ length: 3 }).map((_, idx) => <ProspekSkeleton key={idx} />)
-              : prospek.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.5 }}
-                  transition={{ delay: 0.2 + index * 0.2 }} // Sesuaikan delay
-                  className="bg-green-100 p-4 sm:p-6 rounded-2xl shadow hover:scale-105 transition"
-                >
-                  <h3 className="text-lg sm:text-xl font-semibold text-green-700 mb-2">{item.title}</h3>
-                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed text-justify">{item.desc}</p>
-                </motion.div>
-              ))}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto text-center">
+            {steps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ delay: 0.2 + index * 0.2 }}
+                className="bg-green-50 p-6 rounded-full border-2 border-green-200 hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                <div className="mb-3 flex justify-center">{step.icon}</div>
+                <h3 className="text-lg font-semibold text-green-700 mb-1">{step.title}</h3>
+                <p className="text-sm text-gray-700 leading-relaxed">{step.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </section>
       </div>

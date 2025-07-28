@@ -47,9 +47,9 @@ const LoginPage = () => {
                 </div>
               </div>
 
-              <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">GreenGrow</h1>
+              <h1 className="text-3xl font-bold text-center text-green-700 mb-2">Login</h1>
               <p className="text-center text-gray-600 mb-6 text-sm sm:text-base">
-                Masuk ke akun kamu untuk melanjutkan
+                Silahkan Login Terlebih Dahulu
               </p>
 
               <form onSubmit={handleLogin} className="space-y-4 text-sm">
@@ -96,7 +96,7 @@ const LoginPage = () => {
                   type="submit"
                   className="w-full bg-green-600 text-white py-2.5 rounded-md font-semibold hover:bg-green-700 transition duration-300"
                 >
-                  Masuk
+                  Login
                 </button>
               </form>
 
@@ -106,7 +106,7 @@ const LoginPage = () => {
                   <div className="w-full border-t border-gray-300"></div>
                 </div>
                 <div className="relative flex justify-center text-xs">
-                  <span className="bg-green-100 px-2 text-gray-500">Atau masuk dengan</span>
+                  <span className="bg-green-100 px-2 text-gray-500">Atau login dengan</span>
                 </div>
               </div>
 
@@ -126,7 +126,7 @@ const LoginPage = () => {
               <p className="text-center text-gray-600 text-xs">
                 Belum punya akun?{' '}
                 <Link to="/register" className="text-green-600 hover:underline font-semibold">
-                  Daftar di sini
+                  Register disini
                 </Link>
               </p>
             </div>
